@@ -1,10 +1,10 @@
 import React from "react";
-import type { PokemonCard as PokemonCardType } from "../types/pokemon";
+import type { FilteredPokemonCard } from "../types/pokemon";
 import { CartIcon } from "./icons/CartIcon";
 
 interface PokemonCardProps {
-  card: PokemonCardType;
-  onAddToCart: (card: PokemonCardType) => void;
+  card: FilteredPokemonCard;
+  onAddToCart: (card: FilteredPokemonCard) => void;
   isInCart: boolean;
 }
 

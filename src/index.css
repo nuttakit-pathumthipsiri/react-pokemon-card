@@ -212,13 +212,13 @@ body {
 
 /* Search input styling */
 .search-input {
-  background-color: #1F1D2B;
-  border: 1px solid rgba(234, 124, 105, 0.2);
+  background-color: transparent;
+  border: 1px solid #A0A3B0;
   color: #ffffff;
 }
 
 .search-input:focus {
-  border-color: #EA7C69;
+  border-color: #A0A3B0;
   box-shadow: 0 0 0 2px rgba(234, 124, 105, 0.1);
 }
 
@@ -229,12 +229,12 @@ body {
 /* Filter dropdown styling */
 .filter-dropdown {
   background-color: #1F1D2B;
-  border: 1px solid rgba(234, 124, 105, 0.2);
+  border: 1px solid #A0A3B0;
   color: #ffffff;
 }
 
 .filter-dropdown:focus {
-  border-color: #EA7C69;
+  border-color: #A0A3B0;
 }
 
 /* Cart styling */

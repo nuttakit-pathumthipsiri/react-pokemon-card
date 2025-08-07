@@ -16,8 +16,8 @@ export function Navbar({
   loading,
 }: NavbarProps) {
   return (
-    <header className="bg-card border-b border-accent/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <header>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <div className="flex items-center justify-between">
           {/* Left side - Title */}
           <div className="flex items-center">
@@ -35,11 +35,11 @@ export function Navbar({
                   onFilterChange({ ...filters, name: e.target.value })
                 }
                 placeholder="Search by Name"
-                className="search-input w-64 px-4 py-2 rounded-lg focus:outline-none transition-all duration-200"
+                className="search-input w-64 pl-10 pr-4 py-2 rounded-lg"
                 disabled={loading}
               />
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <SearchIcon className="text-secondary" size={18} />
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <SearchIcon size={18} />
               </div>
             </div>
 
@@ -48,10 +48,11 @@ export function Navbar({
               onClick={onToggleCart}
               className="bg-accent text-white p-3 rounded-lg hover:bg-accent/90 transition-colors"
             >
-              <CartIcon />
+              <CartIcon size={20} />
             </button>
           </div>
         </div>
+        <hr className="border-t border-gray-700 mt-6" />
       </div>
     </header>
   );

@@ -1,10 +1,10 @@
 import { useState, useCallback } from "react";
-import type { CartItem, PokemonCard } from "../types/pokemon";
+import type { CartItem, FilteredPokemonCard } from "../types/pokemon";
 
 export const useCart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const addToCart = useCallback((card: PokemonCard) => {
+  const addToCart = useCallback((card: FilteredPokemonCard) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.card.id === card.id);
 
@@ -89,7 +89,6 @@ export const useCart = () => {
   return {
     cartItems,
     addToCart,
-    removeFromCart,
     updateQuantity,
     increaseQuantity,
     decreaseQuantity,

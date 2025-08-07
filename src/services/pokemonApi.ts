@@ -1,4 +1,8 @@
-import type { PokemonApiResponse, Set } from "../types/pokemon";
+import type {
+  PokemonApiResponse,
+  Set,
+  FilteredPokemonCard,
+} from "../types/pokemon";
 import {
   mockPokemonCards,
   mockSets,
@@ -158,6 +162,11 @@ export class PokemonApiService {
     if (params.types) queryParams.types = params.types;
     if (params.rarities) queryParams.rarities = params.rarities;
     if (params.set) queryParams.set = params.set;
+
+    // เพิ่ม select parameter เพื่อกรองเฉพาะ fields ที่จำเป็น
+    // ใช้ select เพื่อเลือกเฉพาะ fields ที่ต้องการ
+    queryParams.select =
+      "id,name,hp,types,rarity,set,number,artist,images,cardmarket";
 
     return this.makeRequest<PokemonApiResponse>("/cards", queryParams);
   }

@@ -9,7 +9,6 @@ interface CartProps {
   cartItems: CartItem[];
   onIncreaseQuantity: (cardId: string) => void;
   onDecreaseQuantity: (cardId: string) => void;
-  onRemoveFromCart: (cardId: string) => void;
   onClearCart: () => void;
   onCloseCart?: () => void;
   totalItems: number;
@@ -20,7 +19,6 @@ export const Cart: React.FC<CartProps> = ({
   cartItems,
   onIncreaseQuantity,
   onDecreaseQuantity,
-  onRemoveFromCart,
   onClearCart,
   onCloseCart,
   totalItems,
@@ -86,12 +84,9 @@ export const Cart: React.FC<CartProps> = ({
               </div>
 
               {/* Table Items */}
-              <div className="space-y-3 overflow-y-auto max-h-96">
+              <div className="overflow-y-auto max-h-[65vh]">
                 {cartItems.map((item) => (
-                  <div
-                    key={item.card.id}
-                    className="flex flex-col gap-2 items-start"
-                  >
+                  <div key={item.card.id} className="flex flex-col items-start">
                     {/* Item Column */}
                     <div className="flex justify-between w-full items-start">
                       <div className="flex items-start space-x-2 mb-2">
@@ -125,7 +120,7 @@ export const Cart: React.FC<CartProps> = ({
                       </div>
                     </div>
                     {/* Quantity Controls below image */}
-                    <div className="grid grid-cols-12 items-center justify-start w-full gap-2">
+                    <div className="grid grid-cols-12 items-center justify-start w-full gap-2 mb-4">
                       <button
                         onClick={() => onDecreaseQuantity(item.card.id)}
                         className="col-span-2 h-10 bg-gray-600 border border-gray-500 text-gray-300 rounded flex items-center justify-center hover:bg-gray-500 transition-colors font-poppins"

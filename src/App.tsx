@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Cart } from "./components/Cart";
-import { LoadingSpinner } from "./components/LoadingSpinner";
+import { Dropdown } from "./components/Dropdown";
 import { Navbar } from "./components/Navbar";
-import { Pagination } from "./components/Pagination";
 import { PokemonCard as PokemonCardComponent } from "./components/PokemonCard";
 import { useCart } from "./hooks/useCart";
 import { PokemonApiService } from "./services/pokemonApi";
-import type { FilterOptions, PokemonCard, Set } from "./types/pokemon";
+import type { FilterOptions, FilteredPokemonCard, Set } from "./types/pokemon";
 
 // Debounce hook for search
 function useDebounce<T>(value: T, delay: number): T {
@@ -26,12 +25,10 @@ function useDebounce<T>(value: T, delay: number): T {
 }
 
 function App() {
-  const [cards, setCards] = useState<PokemonCard[]>([]);
+  const [cards, setCards] = useState<FilteredPokemonCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterOptionsLoading, setFilterOptionsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [showCart, setShowCart] = useState(false);
   const [cartAnimation, setCartAnimation] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
@@ -63,7 +60,6 @@ function App() {
   const {
     cartItems,
     addToCart,
-    removeFromCart,
     increaseQuantity,
     decreaseQuantity,
     clearCart,
@@ -75,14 +71,14 @@ function App() {
   // Memoize filter parameters to prevent unnecessary re-renders
   const filterParams = useMemo(
     () => ({
-      page: currentPage,
+      page: 1,
       pageSize: 20,
       q: debouncedFilters.name ? `name:"${debouncedFilters.name}"` : undefined,
       types: debouncedFilters.type || undefined,
       rarities: debouncedFilters.rarity || undefined,
       set: debouncedFilters.set || undefined,
     }),
-    [currentPage, debouncedFilters]
+    [debouncedFilters]
   );
 
   const fetchCards = useCallback(
@@ -94,7 +90,6 @@ function App() {
         const response = await PokemonApiService.getCards(filterParams);
 
         setCards(response.data);
-        setTotalPages(Math.ceil(response.totalCount / 20));
       } catch (err) {
         console.error("Error fetching cards:", err);
 
@@ -152,11 +147,6 @@ function App() {
 
   const handleFilterChange = useCallback((newFilters: FilterOptions) => {
     setFilters(newFilters);
-    setCurrentPage(1); // Reset to first page when filters change
-  }, []);
-
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
   }, []);
 
   const handleRetry = useCallback(() => {
@@ -212,88 +202,61 @@ function App() {
       />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
         <div className="space-y-6">
           {/* Section Title and Filter Dropdowns */}
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-primary">Choose Card</h2>
 
             {/* Filter Dropdowns */}
-            <div className="flex items-center space-x-4">
-              <select
+            <div className="flex items-center gap-4">
+              <Dropdown
                 value={filters.set}
-                onChange={(e) =>
-                  handleFilterChange({ ...filters, set: e.target.value })
+                onChange={(value) =>
+                  handleFilterChange({ ...filters, set: value })
                 }
-                className="filter-dropdown px-4 py-2 rounded-lg focus:outline-none transition-all duration-200"
+                options={filteredSets}
+                placeholder="Set"
                 disabled={filterOptionsLoading}
-              >
-                <option value="" className="bg-card text-primary">
-                  Set
-                </option>
-                {filteredSets.map((set) => (
-                  <option
-                    key={set.id}
-                    value={set.id}
-                    className="bg-card text-primary"
-                  >
-                    {set.name}
-                  </option>
-                ))}
-              </select>
+              />
 
-              <select
+              <Dropdown
                 value={filters.rarity}
-                onChange={(e) =>
-                  handleFilterChange({ ...filters, rarity: e.target.value })
+                onChange={(value) =>
+                  handleFilterChange({ ...filters, rarity: value })
                 }
-                className="filter-dropdown px-4 py-2 rounded-lg focus:outline-none transition-all duration-200"
+                options={rarities.map((rarity) => ({
+                  id: rarity,
+                  name: rarity,
+                }))}
+                placeholder="Rarity"
                 disabled={filterOptionsLoading}
-              >
-                <option value="" className="bg-card text-primary">
-                  Rarity
-                </option>
-                {rarities.map((rarity) => (
-                  <option
-                    key={rarity}
-                    value={rarity}
-                    className="bg-card text-primary"
-                  >
-                    {rarity}
-                  </option>
-                ))}
-              </select>
+              />
 
-              <select
+              <Dropdown
                 value={filters.type}
-                onChange={(e) =>
-                  handleFilterChange({ ...filters, type: e.target.value })
+                onChange={(value) =>
+                  handleFilterChange({ ...filters, type: value })
                 }
-                className="filter-dropdown px-4 py-2 rounded-lg focus:outline-none transition-all duration-200"
+                options={types.map((type) => ({ id: type, name: type }))}
+                placeholder="Type"
                 disabled={filterOptionsLoading}
-              >
-                <option value="" className="bg-card text-primary">
-                  Type
-                </option>
-                {types.map((type) => (
-                  <option
-                    key={type}
-                    value={type}
-                    className="bg-card text-primary"
-                  >
-                    {type}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
           </div>
 
           {/* Cards Grid */}
           {loading ? (
-            <LoadingSpinner text="Loading Pokemon cards..." />
+            <div className="p-12 text-center">
+              <h3 className="text-primary text-xl font-semibold mb-2">
+                Loading Pokemon cards...
+              </h3>
+              <p className="text-secondary mb-6">
+                Please wait while we fetch your cards...
+              </p>
+            </div>
           ) : error ? (
-            <div className="bg-card rounded-xl p-12 text-center border border-accent/10">
-              <div className="text-accent text-6xl mb-4">⚠️</div>
+            <div className="p-12 text-center">
               <h3 className="text-primary text-xl font-semibold mb-2">
                 Oops! Something went wrong
               </h3>
@@ -306,8 +269,7 @@ function App() {
               </button>
             </div>
           ) : cards.length === 0 ? (
-            <div className="bg-card rounded-xl p-12 text-center border border-accent/10">
-              <div className="text-secondary text-6xl mb-4">🔍</div>
+            <div className="p-12 text-center">
               <h3 className="text-primary text-xl font-semibold mb-2">
                 No cards found
               </h3>
@@ -316,28 +278,16 @@ function App() {
               </p>
             </div>
           ) : (
-            <>
-              <div className="grid grid-cols-6 gap-4 p-4">
-                {cards.map((card) => (
-                  <PokemonCardComponent
-                    key={card.id}
-                    card={card}
-                    onAddToCart={addToCart}
-                    isInCart={isInCart(card.id)}
-                  />
-                ))}
-              </div>
-
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                  isLoading={loading}
+            <div className="grid grid-cols-6 gap-4 p-4">
+              {cards.map((card) => (
+                <PokemonCardComponent
+                  key={card.id}
+                  card={card}
+                  onAddToCart={addToCart}
+                  isInCart={isInCart(card.id)}
                 />
-              )}
-            </>
+              ))}
+            </div>
           )}
         </div>
 
@@ -362,7 +312,6 @@ function App() {
                 cartItems={cartItems}
                 onIncreaseQuantity={increaseQuantity}
                 onDecreaseQuantity={decreaseQuantity}
-                onRemoveFromCart={removeFromCart}
                 onClearCart={clearCart}
                 onCloseCart={toggleCart}
                 totalItems={getTotalItems()}
