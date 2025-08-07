@@ -1,0 +1,58 @@
+import { CartIcon } from "./icons/CartIcon";
+import { SearchIcon } from "./icons/SearchIcon";
+import type { FilterOptions } from "../types/pokemon";
+
+interface NavbarProps {
+  filters: FilterOptions;
+  onFilterChange: (filters: FilterOptions) => void;
+  onToggleCart: () => void;
+  loading: boolean;
+}
+
+export function Navbar({
+  filters,
+  onFilterChange,
+  onToggleCart,
+  loading,
+}: NavbarProps) {
+  return (
+    <header className="bg-card border-b border-accent/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex items-center justify-between">
+          {/* Left side - Title */}
+          <div className="flex items-center">
+            <h1 className="text-2xl font-bold text-primary">Pokemon market</h1>
+          </div>
+
+          {/* Right side - Search and Cart */}
+          <div className="flex items-center space-x-4">
+            {/* Search Bar */}
+            <div className="relative">
+              <input
+                type="text"
+                value={filters.name}
+                onChange={(e) =>
+                  onFilterChange({ ...filters, name: e.target.value })
+                }
+                placeholder="Search by Name"
+                className="search-input w-64 px-4 py-2 rounded-lg focus:outline-none transition-all duration-200"
+                disabled={loading}
+              />
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <SearchIcon className="text-secondary" size={18} />
+              </div>
+            </div>
+
+            {/* Cart Icon Button */}
+            <button
+              onClick={onToggleCart}
+              className="bg-accent text-white p-3 rounded-lg hover:bg-accent/90 transition-colors"
+            >
+              <CartIcon />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

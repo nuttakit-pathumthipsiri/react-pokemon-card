@@ -1,6 +1,9 @@
 import React from "react";
 import type { CartItem } from "../types/pokemon";
-import { CartIcon } from "./CartIcon";
+import { CartIcon } from "./icons/CartIcon";
+import { PlusIcon } from "./icons/PlusIcon";
+import { MinusIcon } from "./icons/MinusIcon";
+import { CloseIcon } from "./icons/CloseIcon";
 
 interface CartProps {
   cartItems: CartItem[];
@@ -46,24 +49,7 @@ export const Cart: React.FC<CartProps> = ({
               onClick={onCloseCart}
               className="bg-accent text-white p-2 rounded-lg hover:bg-accent/90 transition-all duration-200 font-poppins text-sm"
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 3L11 11"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M11 3L3 11"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <CloseIcon size={14} />
             </button>
           )}
         </div>
@@ -139,23 +125,23 @@ export const Cart: React.FC<CartProps> = ({
                       </div>
                     </div>
                     {/* Quantity Controls below image */}
-                    <div className="flex items-center justify-start w-full gap-2">
+                    <div className="grid grid-cols-12 items-center justify-start w-full gap-2">
                       <button
                         onClick={() => onDecreaseQuantity(item.card.id)}
-                        className="basis-1/5 h-10 bg-gray-600 border border-gray-500 text-gray-300 rounded flex items-center justify-center hover:bg-gray-500 transition-colors text-lg font-bold font-poppins"
+                        className="col-span-2 h-10 bg-gray-600 border border-gray-500 text-gray-300 rounded flex items-center justify-center hover:bg-gray-500 transition-colors font-poppins"
                       >
-                        -
+                        <MinusIcon size={16} />
                       </button>
 
-                      <span className="basis-3/5 text-primary font-semibold text-base text-center font-poppins bg-gray-600 border border-gray-500 rounded py-2 px-2">
+                      <span className="col-span-8 text-primary font-semibold text-base text-center font-poppins bg-gray-600 border border-gray-500 rounded py-2 px-2">
                         {item.quantity}
                       </span>
 
                       <button
                         onClick={() => onIncreaseQuantity(item.card.id)}
-                        className="basis-1/5 h-10 bg-gray-600 border border-gray-500 text-gray-300 rounded flex items-center justify-center hover:bg-gray-500 transition-colors text-lg font-bold font-poppins"
+                        className="col-span-2 h-10 bg-gray-600 border border-gray-500 text-gray-300 rounded flex items-center justify-center hover:bg-gray-500 transition-colors font-poppins"
                       >
-                        +
+                        <PlusIcon size={16} />
                       </button>
                     </div>
                   </div>

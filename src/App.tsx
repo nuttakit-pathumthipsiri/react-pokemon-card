@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
 import { Cart } from "./components/Cart";
-import { CartIcon } from "./components/CartIcon";
 import { LoadingSpinner } from "./components/LoadingSpinner";
+import { Navbar } from "./components/Navbar";
 import { Pagination } from "./components/Pagination";
 import { PokemonCard as PokemonCardComponent } from "./components/PokemonCard";
 import { useCart } from "./hooks/useCart";
@@ -204,46 +204,12 @@ function App() {
   return (
     <div className="min-h-screen bg-primary">
       {/* Header */}
-      <header className="bg-card border-b border-accent/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            {/* Left side - Title */}
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-primary">
-                Pokemon market
-              </h1>
-            </div>
-
-            {/* Right side - Search and Cart */}
-            <div className="flex items-center space-x-4">
-              {/* Search Bar */}
-              <div className="relative">
-                <input
-                  type="text"
-                  value={filters.name}
-                  onChange={(e) =>
-                    handleFilterChange({ ...filters, name: e.target.value })
-                  }
-                  placeholder="Search by Name"
-                  className="search-input w-64 px-4 py-2 rounded-lg focus:outline-none transition-all duration-200"
-                  disabled={loading}
-                />
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-secondary">🔍</span>
-                </div>
-              </div>
-
-              {/* Cart Icon Button */}
-              <button
-                onClick={toggleCart}
-                className="bg-accent text-white p-3 rounded-lg hover:bg-accent/90 transition-colors"
-              >
-                <CartIcon />
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Navbar
+        filters={filters}
+        onFilterChange={handleFilterChange}
+        onToggleCart={toggleCart}
+        loading={loading}
+      />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

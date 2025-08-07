@@ -1,6 +1,6 @@
 import React from "react";
 import type { PokemonCard as PokemonCardType } from "../types/pokemon";
-import { CartIcon } from "./CartIcon";
+import { CartIcon } from "./icons/CartIcon";
 
 interface PokemonCardProps {
   card: PokemonCardType;
