@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: #ffffff;
+  background-color: #252836;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,4 +21,246 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: #252836;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1F1D2B;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EA7C69;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d66a5a;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Button animations */
+.btn-primary {
+  background: #EA7C69;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background: #d66a5a;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Type badges */
+.type-badge {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.type-badge.fire { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+.type-badge.water { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+.type-badge.grass { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+.type-badge.electric { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); }
+.type-badge.psychic { background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); }
+.type-badge.fighting { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+.type-badge.darkness { background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%); }
+.type-badge.metal { background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%); }
+.type-badge.fairy { background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%); }
+.type-badge.dragon { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+.type-badge.colorless { background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%); }
+
+/* Rarity badges */
+.rarity-badge {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.rarity-badge.common { background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%); }
+.rarity-badge.uncommon { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+.rarity-badge.rare { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+.rarity-badge.rare-holo { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+.rarity-badge.ultra-rare { background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); }
+.rarity-badge.secret-rare { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glass morphism effect - updated for new color scheme */
+.glass {
+  background: rgba(31, 29, 43, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(234, 124, 105, 0.1);
+}
+
+/* Price styling */
+.price {
+  background: #EA7C69;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Custom focus styles */
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #EA7C69, 0 0 0 4px transparent;
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Text shadows for better readability */
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom color classes for the new scheme */
+.bg-primary {
+  background-color: #252836;
+}
+
+.bg-card {
+  background-color: #1F1D2B;
+}
+
+.bg-accent {
+  background-color: #EA7C69;
+}
+
+.text-primary {
+  color: #ffffff;
+}
+
+.text-secondary {
+  color: #A0A3B0;
+}
+
+.text-accent {
+  color: #EA7C69;
+}
+
+.border-accent {
+  border-color: #EA7C69;
+}
+
+/* Search input styling */
+.search-input {
+  background-color: #1F1D2B;
+  border: 1px solid rgba(234, 124, 105, 0.2);
+  color: #ffffff;
+}
+
+.search-input:focus {
+  border-color: #EA7C69;
+  box-shadow: 0 0 0 2px rgba(234, 124, 105, 0.1);
+}
+
+.search-input::placeholder {
+  color: #A0A3B0;
+}
+
+/* Filter dropdown styling */
+.filter-dropdown {
+  background-color: #1F1D2B;
+  border: 1px solid rgba(234, 124, 105, 0.2);
+  color: #ffffff;
+}
+
+.filter-dropdown:focus {
+  border-color: #EA7C69;
+}
+
+/* Cart styling */
+.cart-container {
+  background-color: #1F1D2B;
+  border-left: 1px solid rgba(234, 124, 105, 0.1);
+}
+
+/* Add to cart button */
+.add-to-cart-btn {
+  background-color: #1F1D2B;
+  color: #ffffff;
+  border: 1px solid rgba(234, 124, 105, 0.3);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #EA7C69;
+  border-color: #EA7C69;
+  color: #ffffff;
+}
+
+.add-to-cart-btn:disabled {
+  background-color: #2D303E;
+  color: #A0A3B0;
+  border-color: #2D303E;
+  cursor: not-allowed;
 }
