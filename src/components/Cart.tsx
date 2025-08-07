@@ -26,27 +26,46 @@ export const Cart: React.FC<CartProps> = ({
   return (
     <div className="h-full flex flex-col">
       {/* Cart Header */}
-      <div className="flex justify-between items-center p-4 border-b border-accent/10">
-        <div className="flex items-center justify-between w-full">
-          <h2 className="text-lg font-bold text-primary font-poppins">Cart</h2>
-          <div className="flex items-center space-x-4">
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex flex-col">
+            <h2 className="text-lg font-bold text-primary font-poppins">
+              Cart
+            </h2>
             {cartItems.length > 0 && (
               <button
                 onClick={onClearCart}
-                className="text-accent hover:text-accent/80 text-xs font-medium transition-colors font-poppins"
+                className="text-secondary hover:text-secondary/80 text-xs font-medium transition-colors font-poppins underline"
               >
                 Clear all
               </button>
             )}
-            {onCloseCart && (
-              <button
-                onClick={onCloseCart}
-                className="text-accent hover:text-accent/80 transition-colors p-1 text-lg font-poppins"
-              >
-                ✕
-              </button>
-            )}
           </div>
+          {onCloseCart && (
+            <button
+              onClick={onCloseCart}
+              className="bg-accent text-white p-2 rounded-lg hover:bg-accent/90 transition-all duration-200 font-poppins text-sm"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3 3L11 11"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M11 3L3 11"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
 
@@ -68,65 +87,75 @@ export const Cart: React.FC<CartProps> = ({
           </div>
         ) : (
           <>
-            {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-4">
-              <div className="space-y-3">
+            {/* Cart Items Table */}
+            <div className="flex-1 px-4">
+              {/* Table Header */}
+              <div className="grid grid-cols-12 gap-2 mb-3 text-xs text-secondary font-medium font-poppins pb-2">
+                <div className="col-span-3">Item</div>
+                <div className="col-span-6">Qty</div>
+                <div className="col-span-3 text-right">Price</div>
+                <div className="col-span-12">
+                  <hr className="border-t border-gray-700/30" />
+                </div>
+              </div>
+
+              {/* Table Items */}
+              <div className="space-y-3 overflow-y-auto max-h-96">
                 {cartItems.map((item) => (
                   <div
                     key={item.card.id}
-                    className="bg-card rounded-lg p-3 border border-accent/10"
+                    className="flex flex-col gap-2 items-start"
                   >
-                    <div className="flex items-center space-x-2">
-                      {/* Card Image */}
-                      <div className="relative">
+                    {/* Item Column */}
+                    <div className="flex justify-between w-full items-start">
+                      <div className="flex items-start space-x-2 mb-2">
                         <img
                           src={item.card.images.small}
                           alt={item.card.name}
-                          className="w-12 h-12 object-cover rounded"
+                          className="w-14 h-18 object-cover rounded"
                         />
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-primary font-medium text-xs truncate font-poppins">
+                            {item.card.name}
+                          </h4>
+                          <p className="text-gray-600 font-bold text-xs font-poppins">
+                            $
+                            {item.card.cardmarket.prices.averageSellPrice.toFixed(
+                              2
+                            )}
+                          </p>
+                        </div>
                       </div>
 
-                      {/* Card Details */}
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-primary font-medium text-xs truncate font-poppins">
-                          {item.card.name}
-                        </h4>
-                        <p className="text-accent font-bold text-xs font-poppins">
+                      {/* Price Column */}
+                      <div className="flex items-center justify-end">
+                        <span className="text-white font-bold text-xs font-poppins">
                           $
                           {(
                             item.card.cardmarket.prices.averageSellPrice *
                             item.quantity
                           ).toFixed(2)}
-                        </p>
-                      </div>
-
-                      {/* Quantity Controls */}
-                      <div className="flex items-center space-x-1">
-                        <button
-                          onClick={() => onDecreaseQuantity(item.card.id)}
-                          className="w-5 h-5 bg-card border border-accent/30 text-primary rounded flex items-center justify-center hover:bg-accent/20 transition-colors text-xs font-bold font-poppins"
-                        >
-                          -
-                        </button>
-
-                        <span className="text-primary font-semibold text-xs min-w-[16px] text-center font-poppins">
-                          {item.quantity}
                         </span>
-
-                        <button
-                          onClick={() => onIncreaseQuantity(item.card.id)}
-                          className="w-5 h-5 bg-accent text-white rounded flex items-center justify-center hover:bg-accent/80 transition-colors text-xs font-bold font-poppins"
-                        >
-                          +
-                        </button>
                       </div>
-
-                      {/* Remove Button */}
+                    </div>
+                    {/* Quantity Controls below image */}
+                    <div className="flex items-center justify-start w-full gap-2">
                       <button
-                        onClick={() => onRemoveFromCart(item.card.id)}
-                        className="text-accent hover:text-accent/80 transition-colors p-1 text-xs font-poppins"
+                        onClick={() => onDecreaseQuantity(item.card.id)}
+                        className="basis-1/5 h-10 bg-gray-600 border border-gray-500 text-gray-300 rounded flex items-center justify-center hover:bg-gray-500 transition-colors text-lg font-bold font-poppins"
                       >
-                        ✕
+                        -
+                      </button>
+
+                      <span className="basis-3/5 text-primary font-semibold text-base text-center font-poppins bg-gray-600 border border-gray-500 rounded py-2 px-2">
+                        {item.quantity}
+                      </span>
+
+                      <button
+                        onClick={() => onIncreaseQuantity(item.card.id)}
+                        className="basis-1/5 h-10 bg-gray-600 border border-gray-500 text-gray-300 rounded flex items-center justify-center hover:bg-gray-500 transition-colors text-lg font-bold font-poppins"
+                      >
+                        +
                       </button>
                     </div>
                   </div>
@@ -135,7 +164,7 @@ export const Cart: React.FC<CartProps> = ({
             </div>
 
             {/* Cart Summary */}
-            <div className="border-t border-accent/20 p-4 space-y-3">
+            <div className="p-4 space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-secondary text-xs font-poppins">
                   Total card amount:
@@ -146,20 +175,17 @@ export const Cart: React.FC<CartProps> = ({
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-primary text-sm font-bold font-poppins">
+                <span className="text-secondary text-xs font-poppins">
                   Total price:
                 </span>
-                <span className="price px-3 py-1 rounded text-sm font-bold font-poppins">
+                <span className="text-white font-semibold text-sm font-poppins">
                   ${totalPrice.toFixed(2)}
                 </span>
               </div>
 
               {/* Checkout Button */}
               <button className="w-full bg-accent text-white py-3 px-4 rounded-lg font-semibold hover:bg-accent/90 transition-all duration-200 font-poppins text-sm">
-                <span className="flex items-center justify-center">
-                  <span className="mr-2">💳</span>
-                  Continue to Payment
-                </span>
+                Continue to Payment
               </button>
             </div>
           </>
