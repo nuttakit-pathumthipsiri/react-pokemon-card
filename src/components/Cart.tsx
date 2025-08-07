@@ -50,9 +50,9 @@ export const Cart: React.FC<CartProps> = ({
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex flex-col">
         {cartItems.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex items-center justify-center">
             <div className="text-center py-8">
               <div className="text-secondary mb-3 flex justify-center">
                 <CartIcon size={48} />
@@ -67,7 +67,7 @@ export const Cart: React.FC<CartProps> = ({
           </div>
         ) : (
           <>
-            <div className="flex-1 px-4">
+            <div className="px-4 flex flex-col">
               <div className="grid grid-cols-12 gap-2 mb-3 text-xs text-secondary font-medium pb-2">
                 <div className="col-span-3">Item</div>
                 <div className="col-span-6">Qty</div>
@@ -77,7 +77,10 @@ export const Cart: React.FC<CartProps> = ({
                 </div>
               </div>
 
-              <div className="overflow-y-auto max-h-[65vh]">
+              <div
+                className="overflow-y-auto"
+                style={{ maxHeight: "calc(100vh - 280px)" }}
+              >
                 {cartItems.map((item) => (
                   <div key={item.card.id} className="flex flex-col items-start">
                     <div className="flex justify-between w-full items-start">
