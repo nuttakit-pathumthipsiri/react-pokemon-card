@@ -1,8 +1,10 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import type { CartItem, FilteredPokemonCard } from "../types/pokemon";
 
 export const useCart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [showCart, setShowCart] = useState(false);
+  const [cartAnimation, setCartAnimation] = useState(false);
 
   const addToCart = useCallback((card: FilteredPokemonCard) => {
     setCartItems((prevItems) => {
@@ -86,8 +88,24 @@ export const useCart = () => {
     [cartItems]
   );
 
+  const toggleCart = useCallback(() => {
+    if (showCart) {
+      setCartAnimation(false);
+      setTimeout(() => {
+        setShowCart(false);
+      }, 300);
+    } else {
+      setShowCart(true);
+      setTimeout(() => {
+        setCartAnimation(true);
+      }, 10);
+    }
+  }, [showCart]);
+
   return {
     cartItems,
+    showCart,
+    cartAnimation,
     addToCart,
     updateQuantity,
     increaseQuantity,
@@ -96,5 +114,6 @@ export const useCart = () => {
     getTotalItems,
     getTotalPrice,
     isInCart,
+    toggleCart,
   };
 };

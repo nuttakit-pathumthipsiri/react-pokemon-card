@@ -1,22 +1,16 @@
-import type {
-  PokemonApiResponse,
-  Set,
-  FilteredPokemonCard,
-} from "../types/pokemon";
+import type { PokemonApiResponse, Set } from "../types/pokemon";
 import {
   mockPokemonCards,
+  mockRarities,
   mockSets,
   mockTypes,
-  mockRarities,
 } from "./mockData";
 
-const API_BASE_URL = "https://api.pokemontcg.io/v2";
-const API_KEY = "your-api-key-here"; // You'll need to get an API key from https://dev.pokemontcg.io/
+const API_BASE_URL =
+  import.meta.env.VITE_POKEMON_API_BASE_URL ?? "https://api.pokemontcg.io/v2";
+const API_KEY = import.meta.env.VITE_POKEMON_API_KEY ?? "your-api-key-here";
+const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === "true";
 
-// Set this to true to use mock data instead of real API calls
-const USE_MOCK_DATA = true;
-
-// Custom error class for API errors
 export class PokemonApiError extends Error {
   public status?: number;
   public statusText?: string;
@@ -32,8 +26,7 @@ export class PokemonApiError extends Error {
 export class PokemonApiService {
   private static async makeRequest<T>(
     endpoint: string,
-    params?: Record<string, string>,
-    timeout: number = 10000
+    params?: Record<string, string>
   ): Promise<T> {
     const url = new URL(`${API_BASE_URL}${endpoint}`);
 
@@ -45,20 +38,13 @@ export class PokemonApiService {
       });
     }
 
-    // Create AbortController for timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
-
     try {
       const response = await fetch(url.toString(), {
         headers: {
           "X-Api-Key": API_KEY,
           "Content-Type": "application/json",
         },
-        signal: controller.signal,
       });
-
-      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new PokemonApiError(
@@ -70,16 +56,11 @@ export class PokemonApiService {
 
       return response.json();
     } catch (error) {
-      clearTimeout(timeoutId);
-
       if (error instanceof PokemonApiError) {
         throw error;
       }
 
       if (error instanceof Error) {
-        if (error.name === "AbortError") {
-          throw new PokemonApiError("Request timeout. Please try again.");
-        }
         throw new PokemonApiError(`Network error: ${error.message}`);
       }
 

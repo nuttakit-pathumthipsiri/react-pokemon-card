@@ -1,6 +1,6 @@
+import type { FilterOptions } from "../types/pokemon";
 import { CartIcon } from "./icons/CartIcon";
 import { SearchIcon } from "./icons/SearchIcon";
-import type { FilterOptions } from "../types/pokemon";
 
 interface NavbarProps {
   filters: FilterOptions;
@@ -19,7 +19,6 @@ export function Navbar({
     <header>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <div className="flex items-center">
-          {/* Left side - Title */}
           <div className="grow items-center">
             <h1 className="text-2xl font-bold text-primary">Pokemon market</h1>
           </div>
