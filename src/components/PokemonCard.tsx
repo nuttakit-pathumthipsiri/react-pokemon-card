@@ -17,7 +17,7 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({
   const quantity = card.set.total;
 
   return (
-    <div className="flex w-full items-center justify-center">
+    <div className="flex w-full items-center justify-center pb-4">
       <div className="card-hover rounded-xl mb-4 max-w-64">
         <div className="relative flex justify-center items-center">
           <img
@@ -27,7 +27,7 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({
             loading="lazy"
           />
         </div>
-        <div className="bg-card overflow-hidden rounded-xl pt-14 mt-[-40px] p-4 w-[200px]">
+        <div className="bg-card overflow-hidden rounded-xl pt-14 mt-[-40px] p-4 w-[195px]">
           <h3 className="text-sm font-medium text-primary mb-3 text-center line-clamp-2 min-h-[40px]">
             {card.name}
           </h3>
