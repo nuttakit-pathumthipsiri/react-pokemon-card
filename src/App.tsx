@@ -1,5 +1,6 @@
 import { Cart } from "./components/Cart";
 import { Dropdown } from "./components/Dropdown";
+import { LoadingOverlay } from "./components/LoadingOverlay";
 import { Navbar } from "./components/Navbar";
 import { PokemonCard as PokemonCardComponent } from "./components/PokemonCard";
 import { useApp } from "./hooks/useApp";
@@ -36,6 +37,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-primary mt-2">
+      <LoadingOverlay isLoading={loading} />
       <Navbar
         filters={filters}
         onFilterChange={handleFilterChange}
@@ -83,16 +85,7 @@ function App() {
             </div>
           </div>
 
-          {loading ? (
-            <div className="p-12 text-center">
-              <h3 className="text-primary text-xl font-semibold mb-2">
-                Loading Pokemon cards...
-              </h3>
-              <p className="text-secondary mb-6">
-                Please wait while we fetch your cards...
-              </p>
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-12 text-center">
               <h3 className="text-primary text-xl font-semibold mb-2">
                 Oops! Something went wrong

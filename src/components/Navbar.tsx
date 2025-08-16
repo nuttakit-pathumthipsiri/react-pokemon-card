@@ -20,7 +20,7 @@ export function Navbar({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <div className="flex items-center">
           <div className="grow items-center">
-            <h1 className="text-2xl font-bold text-primary">Pokemon market</h1>
+            <h1 className="text-2xl font-bold text-primary">Pokémon market</h1>
           </div>
           <div className="flex-none justify-end relative mr-4 hidden sm:block">
             <input
